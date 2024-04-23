@@ -10,10 +10,7 @@ const {
   deleteFellow
 } = require('./controllers/fellowControllers');
 
-const { 
-  servePost,
-  createPost,
-} = require('./controllers/postsControllers');
+const { createPost, servePosts, servePost, servePostsByFellow, deletePost } = require('./controllers/postControllers');
 
 const app = express();
 const pathToFrontendDist = path.join(__dirname, '../frontend/dist');
@@ -50,9 +47,11 @@ app.post('/api/fellows', createFellow);
 app.patch('/api/fellows/:id', updateFellow);
 app.delete('/api/fellows/:id', deleteFellow);
 
-
-app.get('/api/posts', servePost);
 app.post('/api/posts', createPost);
+app.get('/api/posts', servePosts);
+app.get('/api/posts/:id', servePost);
+app.get('/api/fellows/:fellowId/posts', servePostsByFellow);
+app.delete('/api/posts/:id', deletePost);
 
 
 app.get('*', (req, res, next) => {
